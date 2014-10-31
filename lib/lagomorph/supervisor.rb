@@ -9,5 +9,9 @@ module Lagomorph
 
     end
 
+    def dismiss
+
+    end
+
   end
 end
