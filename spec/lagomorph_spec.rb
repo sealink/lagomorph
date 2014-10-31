@@ -1,4 +1,7 @@
 require 'spec_helper'
+require 'lagomorph/supervisor'
+require 'lagomorph/session'
+require 'lagomorph/rpc_call'
 
 describe 'a Lagomorph RPC process' do
 
