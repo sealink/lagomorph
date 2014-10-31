@@ -6,7 +6,18 @@ require 'lagomorph/rpc_call'
 describe 'a Lagomorph RPC process' do
 
   class PongWorker
+    attr_reader :calls
+
+    def self.calls
+      @calls ||= 0
+    end
+
+    def self.record_call
+      @calls = calls + 1
+    end
+
     def pong
+      self.class.record_call
       'pong'
     end
   end
@@ -33,6 +44,7 @@ describe 'a Lagomorph RPC process' do
     context 'when an rpc call is made on the ping queue' do
       let(:result) { Lagomorph::RpcCall.new(session).dispatch('ping') }
       it { expect(result).to eq 'pong' }
+      it { expect(PongWorker.calls).to eq 1 }
     end
 
     after do
