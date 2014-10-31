@@ -31,7 +31,7 @@ describe 'a Lagomorph RPC process' do
       }
     }
 
-    let(:session) { Lagomorph::Session.new(connection_params) }
+    let(:session) { Lagomorph::Session.connect(connection_params) }
 
     let(:supervisor) { Lagomorph::Supervisor.new(session) }
 
@@ -48,7 +48,7 @@ describe 'a Lagomorph RPC process' do
     end
 
     after do
-      supervisor.dismiss
+      session.close_connection
     end
   end
 
