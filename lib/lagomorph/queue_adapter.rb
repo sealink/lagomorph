@@ -14,5 +14,9 @@ module Lagomorph
       end
     end
 
+    def name
+      queue.name
+    end
+
   end
 end

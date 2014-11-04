@@ -30,7 +30,7 @@ module Lagomorph
       @channel = @session.create_channel(1)
 
       @exchange    = @channel.default_exchange
-      @reply_queue = @channel.queue('', exclusive: true)
+      @reply_queue = QueueBuilder.new(@channel).reply_queue
 
       listen_for_responses
 
@@ -54,7 +54,7 @@ module Lagomorph
     end
 
     def listen_for_responses
-      QueueAdapter.new(@reply_queue).subscribe(block: false) do |metadata, payload|
+      @reply_queue.subscribe(block: false) do |metadata, payload|
         puts " [->] Received response from server..."
         @results[metadata.correlation_id].push(payload)
       end
