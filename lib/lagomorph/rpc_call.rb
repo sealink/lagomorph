@@ -43,22 +43,10 @@ module Lagomorph
     end
 
     def publish_rpc_call(request, correlation_id)
-      opts = {routing_key: @queue_name}
-      properties =  {
-        correlation_id: correlation_id,
-        reply_to:       @reply_queue.name
-      }
-
-      #TODO: check if distinction needed
-      if Lagomorph.using_bunny?
-        opts.merge!(properties)
-      else
-        opts.merge!(properties: properties)
-      end
-
-      @exchange.publish(request, opts)
-
-      puts " [.] Sent request to server..."
+      @exchange.publish(request, routing_key:    @queue_name,
+                                 correlation_id: correlation_id,
+                                 reply_to:       @reply_queue.name
+      )
     end
 
     def calculate_correlation_id
