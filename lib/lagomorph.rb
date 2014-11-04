@@ -21,7 +21,9 @@ module Lagomorph
 end
 
 if Lagomorph.using_bunny?
+  puts "Using bunnies in an obscene way"
   require 'bunny'
 else
+  puts "Marching hares"
   require 'march_hare'
 end
