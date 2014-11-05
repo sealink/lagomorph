@@ -1,24 +1,18 @@
 require 'spec_helper'
-require 'lagomorph/supervisor'
 require 'lagomorph/session'
+require 'lagomorph/supervisor'
+require 'lagomorph/subscriber'
 require 'lagomorph/rpc_call'
 
 describe 'a Lagomorph RPC process' do
 
   class PongWorker
-    attr_reader :calls
-
-    def self.calls
-      @calls ||= 0
-    end
-
-    def self.record_call
-      @calls = calls + 1
-    end
-
     def pong
-      self.class.record_call
       'pong'
+    end
+
+    def echo(request)
+      request
     end
   end
 
@@ -38,13 +32,17 @@ describe 'a Lagomorph RPC process' do
     let(:queue) { 'ping' }
 
     before do
-      supervisor.route queue, PongWorker, call: :pong
+      supervisor.route queue, PongWorker
     end
 
-    context 'when an rpc call is made on the ping queue' do
-      let(:result) { Lagomorph::RpcCall.new(session).dispatch('ping') }
+    context 'when a pong rpc call is made on the ping queue' do
+      let(:result) { Lagomorph::RpcCall.new(session).dispatch(queue, 'pong') }
       it { expect(result).to eq 'pong' }
-      it { expect(PongWorker.calls).to eq 1 }
+    end
+
+    context 'when an echo rpc call is made on the ping queue' do
+      let(:result) { Lagomorph::RpcCall.new(session).dispatch(queue, 'echo', 'test') }
+      it { expect(result).to eq 'test' }
     end
 
     after do

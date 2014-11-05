@@ -1,4 +1,6 @@
 require 'lagomorph/queue_adapter'
+require 'lagomorph/json_parser'
+require 'securerandom'
 
 module Lagomorph
   class RpcCall
@@ -8,17 +10,17 @@ module Lagomorph
       @results = Hash.new { |h, k| h[k] = ::Queue.new }
     end
 
-    def dispatch(queue_name, payload = '')
+    def dispatch(queue_name, method, *params)
       @queue_name = queue_name
       prepare_channel
-      correlation_id = calculate_correlation_id
-      publish_rpc_call(payload, correlation_id)
-      response = block_till_receive_response(correlation_id)
+      @correlation_id = calculate_correlation_id
+      payload = prepare_payload(method, *params)
+      publish_rpc_call(payload, @correlation_id)
+      response = block_till_receive_response(@correlation_id)
 
       close_channel
 
-      # response['result'] || (fail response.fetch('error'))
-      response
+      response['result'] || (fail response.fetch('error'))
     end
 
 
@@ -49,6 +51,10 @@ module Lagomorph
       )
     end
 
+    def prepare_payload(method, *params)
+      JsonParser.new.build_request(method, *params)
+    end
+
     def calculate_correlation_id
       SecureRandom.uuid
     end
@@ -61,11 +67,14 @@ module Lagomorph
 
     def block_till_receive_response(correlation_id)
       raw_response = @results[correlation_id].pop # blocks until can pop
-      # response     = JSON.parse(raw_response)
-      response = raw_response
-      @results.delete(correlation_id) # delete to avoid memory leak
+      response = parse_response(raw_response)
+      @results.delete(correlation_id) if @results[correlation_id].empty? # delete to avoid memory leak
 
       response
+    end
+
+    def parse_response(response)
+      JsonParser.new.parse_response(response)
     end
 
   end
