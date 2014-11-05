@@ -55,7 +55,6 @@ module Lagomorph
 
     def listen_for_responses
       @reply_queue.subscribe(block: false) do |metadata, payload|
-        puts " [->] Received response from server..."
         @results[metadata.correlation_id].push(payload)
       end
     end
