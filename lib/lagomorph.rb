@@ -25,3 +25,8 @@ if Lagomorph.using_bunny?
 else
   require 'march_hare'
 end
+
+require 'lagomorph/session'
+require 'lagomorph/subscriber'
+require 'lagomorph/supervisor'
+require 'lagomorph/rpc_call'
