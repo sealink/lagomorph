@@ -6,10 +6,16 @@ require 'lagomorph/version'
 Gem::Specification.new do |spec|
   spec.name          = "lagomorph"
   spec.version       = Lagomorph::VERSION
-  spec.authors       = ["Alessandro Berardi"]
-  spec.email         = ["berardialessandro@gmail.com"]
+  spec.authors       = ["Alessandro Berardi", "Adam Davies"]
+  spec.email         = ["berardialessandro@gmail.com", "adzdavies@gmail.com"]
   spec.summary       = %q{RPC Messaging pattern using RabbitMQ}
-  spec.description   = %q{Lagomorph is a mammal of the order Lagomorpha, which comprises the hares, rabbits, and pikas.}
+  spec.description   = %q{
+    Lagomorph is a mammal of the order Lagomorpha, which comprises the hares, rabbits, and pikas.
+
+    It's also a gem that implements the RPC pattern over AMPQ using RabbitMQ.
+    In this case, it can work with either MRI (through the bunny gem) or jRuby 
+    (via the march_hare gem).
+  }
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -18,12 +24,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  puts RUBY_PLATFORM
-  if RUBY_PLATFORM == 'java'
-    # jruby
+  if RUBY_PLATFORM == 'java' # jruby
     spec.add_dependency 'march_hare'
-  else
-    # mri
+  else # mri
     spec.add_dependency 'bunny'
   end
   spec.add_dependency 'json'
