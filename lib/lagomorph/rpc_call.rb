@@ -7,22 +7,30 @@ module Lagomorph
 
     def initialize(session)
       @session = session
-      @results = Hash.new { |h, k| h[k] = ::Queue.new }
+      @results = {}
+      @mutex = Monitor.new
     end
 
     def dispatch(queue_name, method, *params)
       @queue_name = queue_name
-      prepare_channel
-      @correlation_id = calculate_correlation_id
-      payload = prepare_payload(method, *params)
-      publish_rpc_call(payload, @correlation_id)
-      response = block_till_receive_response(@correlation_id)
 
-      close_channel
+      correlation_id = calculate_correlation_id
+      @mutex.synchronize do
+        @results[correlation_id] = ::Queue.new
+      end
+
+      prepare_channel
+      payload = prepare_payload(method, *params)
+      publish_rpc_call(payload, correlation_id)
+      response = block_till_receive_response(correlation_id)
 
       response['result'] || (fail response.fetch('error'))
     end
 
+    def close_channel
+      @channel.close
+      @prepared_channel = false
+    end
 
     private
 
@@ -37,11 +45,6 @@ module Lagomorph
       listen_for_responses
 
       @prepared_channel = true
-    end
-
-    def close_channel
-      @channel.close
-      @prepared_channel = false
     end
 
     def publish_rpc_call(request, correlation_id)
@@ -68,7 +71,7 @@ module Lagomorph
     def block_till_receive_response(correlation_id)
       raw_response = @results[correlation_id].pop # blocks until can pop
       response = parse_response(raw_response)
-      @results.delete(correlation_id) if @results[correlation_id].empty? # delete to avoid memory leak
+      @results.delete(correlation_id)
 
       response
     end
