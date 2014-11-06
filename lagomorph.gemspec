@@ -24,14 +24,23 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  if RUBY_PLATFORM == 'java' # jruby
-    spec.add_dependency 'march_hare'
-  else # mri
-    spec.add_dependency 'bunny'
-  end
+  # You'll have to include one of these when you use it
+  # since gem-build will include one or both...
+  #  if RUBY_PLATFORM == 'java' # jruby
+  #    spec.add_dependency 'march_hare'
+  #  else # mri
+  #    spec.add_dependency 'bunny'
+  #  end
   spec.add_dependency 'json'
 
   spec.add_development_dependency "bundler", "~> 1.7"
+
+  # Switch your platform when spec'ing...
+  if RUBY_PLATFORM == 'java' # jruby
+    spec.add_development_dependency 'march_hare'
+  else # mri
+    spec.add_development_dependency 'bunny'
+  end
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
 

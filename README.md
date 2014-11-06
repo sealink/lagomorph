@@ -10,9 +10,17 @@ In this case, it can work with either MRI (through the bunny gem) or jRuby
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this to your application's Gemfile if you're on jruby:
 
 ```ruby
+gem 'march_hare'
+gem 'lagomorph'
+```
+
+...and if you're on MRI, or rubinius:
+
+```ruby
+gem 'bunny'
 gem 'lagomorph'
 ```
 
