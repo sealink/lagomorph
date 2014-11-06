@@ -1,10 +1,17 @@
 require 'spec_helper'
+require 'yaml'
 require 'lagomorph/session'
 require 'lagomorph/supervisor'
 require 'lagomorph/subscriber'
 require 'lagomorph/rpc_call'
 
 describe 'a Lagomorph RPC process' do
+
+  let(:rabbitmq_config) {
+    YAML.load_file(
+      File.join(File.expand_path(File.dirname(__FILE__)),'rabbitmq.yml')
+    )
+  }
 
   class PongWorker
     def pong
@@ -19,9 +26,9 @@ describe 'a Lagomorph RPC process' do
   context 'when supervising a PongWorker on the ping queue' do
     let(:connection_params) {
       {
-        host:     '172.28.128.3',
-        username: 'elasticsearch',
-        password: 'asecretpassword'
+        host:     rabbitmq_config.fetch('host'),
+        username: rabbitmq_config.fetch('username'),
+        password: rabbitmq_config.fetch('password')
       }
     }
 
