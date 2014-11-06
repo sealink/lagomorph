@@ -73,6 +73,7 @@ Now to utilise this amazing service, we would use the rpc call client:
   result   = rpc_call.dispatch(queue, 'ponger')
 
   puts "The result should be 'pong'.  Is it: #{result}?"
+```
 
 ## Contributing
 
