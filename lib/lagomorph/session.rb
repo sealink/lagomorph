@@ -4,6 +4,7 @@ module Lagomorph
     CONNECTION_PARAM_KEYS = [
       :host,
       :heartbeat_interval,
+      :user,
       :username,
       :password,
       :port
