@@ -1,6 +1,12 @@
 language: ruby
 rvm:
   - 1.9.3
+  - 2.1
+  - jruby-1.7.16
 script: "bundle exec rake coverage"
 services:
   - rabbitmq
+notifications:
+  email:
+    - support@travellink.com.au
+  flowdock: e69dcafad1fea15c6b8c76e9ced965af
