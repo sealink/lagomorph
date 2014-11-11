@@ -41,7 +41,10 @@ Gem::Specification.new do |spec|
   else # mri
     spec.add_development_dependency 'bunny'
   end
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov-rcov'
+  spec.add_development_dependency 'coveralls'
 
 end
