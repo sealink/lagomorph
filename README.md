@@ -1,5 +1,11 @@
 # Lagomorph
 
+[![Gem Version](https://badge.fury.io/rb/geokit.png)](http://badge.fury.io/rb/lagomorph)
+[![Build Status](https://travis-ci.org/sealink/lagomorph.png?branch=master)](https://travis-ci.org/sealink/lagomorph)
+[![Coverage Status](https://coveralls.io/repos/sealink/lagomorph/badge.png)](https://coveralls.io/r/sealink/lagomorph)
+[![Dependency Status](https://gemnasium.com/sealink/lagomorph.png)](https://gemnasium.com/sealink/lagomorph)
+[![Code Climate](https://codeclimate.com/github/sealink/lagomorph.png)](https://codeclimate.com/github/sealink/lagomorph)
+
 RPC Messaging pattern using RabbitMQ
 
 Lagomorph is a mammal of the order Lagomorpha, which comprises the hares, rabbits, and pikas.
@@ -77,7 +83,7 @@ Now to utilise this amazing service, we would use the rpc call client:
 
 ## Contributing
 
-1. Fork it ( https://bitbucket.org/team-sealink/lagomorph/fork )
+1. Fork it ( https://github.com/sealink/lagomorph/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
