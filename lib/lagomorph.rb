@@ -29,4 +29,5 @@ end
 require 'lagomorph/session'
 require 'lagomorph/subscriber'
 require 'lagomorph/supervisor'
+require 'lagomorph/worker'
 require 'lagomorph/rpc_call'

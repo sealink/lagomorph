@@ -21,7 +21,7 @@ module Lagomorph
 
     def process_request(request)
       method, params = parse_request(request)
-      @worker_class.new.send(method, *params)
+      @worker_class.new(method, *params).work
     end
 
     def publish_response(channel, metadata, payload)

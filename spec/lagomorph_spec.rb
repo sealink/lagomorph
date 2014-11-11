@@ -13,7 +13,7 @@ describe 'a Lagomorph RPC process' do
     )
   }
 
-  class PongWorker
+  class PongWorker  < Lagomorph::Worker
     def pong
       'pong'
     end
