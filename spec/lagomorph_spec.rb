@@ -47,7 +47,7 @@ describe 'a Lagomorph RPC process' do
       supervisor.route queue, PongWorker
     end
 
-    context 'and we have an rpc call manager thingy' do
+    context 'and we have an rpc call' do
       let!(:rpc_call) { Lagomorph::RpcCall.new(session) }
 
       context 'when a pong rpc call is made on the ping queue' do
@@ -81,7 +81,7 @@ describe 'a Lagomorph RPC process' do
       specify 'each thread will get the expected response' do
         rpc_calls.map do |rpc_call|
           Thread.new do
-            thread_results = calls_per_thread.times.map { |call_index|
+            calls_per_thread.times.map { |call_index|
               rpc_call.dispatch(queue, 'echo', call_index).tap { |result|
                 expect(result).to eq call_index
               }
