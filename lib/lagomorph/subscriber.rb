@@ -9,8 +9,7 @@ module Lagomorph
 
     def subscribe(queue, channel)
       queue.subscribe(manual_ack: true, block: false) do |metadata, payload|
-        result   = process_request(payload)
-        response = build_response(result)
+        response = process_request(payload)
         channel.ack(metadata.delivery_tag)
         publish_response(channel, metadata, response)
       end
@@ -21,7 +20,10 @@ module Lagomorph
 
     def process_request(request)
       method, params = parse_request(request)
-      @worker_class.new(method, *params).work
+      result = @worker_class.new(method, *params).work
+      build_response(result)
+    rescue => e
+      build_error(e.message)
     end
 
     def publish_response(channel, metadata, payload)
@@ -36,6 +38,10 @@ module Lagomorph
 
     def build_response(result)
       JsonParser.new.build_response(result)
+    end
+
+    def build_error(error)
+      JsonParser.new.build_error(error)
     end
 
   end

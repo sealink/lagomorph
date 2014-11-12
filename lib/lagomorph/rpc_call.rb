@@ -24,7 +24,7 @@ module Lagomorph
       publish_rpc_call(payload, correlation_id)
       response = block_till_receive_response(correlation_id)
 
-      response['result'] || (fail response.fetch('error'))
+      response['result'] || fail(RpcError, response.fetch('error'))
     end
 
     def close_channel

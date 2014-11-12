@@ -4,6 +4,7 @@ require 'lagomorph/session'
 require 'lagomorph/supervisor'
 require 'lagomorph/subscriber'
 require 'lagomorph/rpc_call'
+require 'lagomorph/exceptions'
 
 describe 'a Lagomorph RPC process' do
 
@@ -20,6 +21,10 @@ describe 'a Lagomorph RPC process' do
 
     def echo(request)
       request
+    end
+
+    def generate_failure
+      fail 'Could not process request'
     end
   end
 
@@ -54,6 +59,13 @@ describe 'a Lagomorph RPC process' do
         let(:result) { rpc_call.dispatch(queue, 'echo', 'test') }
         it { expect(result).to eq 'test' }
       end
+
+      context 'when a generate_failure rpc call is made on the ping queue' do
+        let(:result) { rpc_call.dispatch(queue, 'generate_failure') }
+        it { expect { result }.to raise_error Lagomorph::RpcError,
+                                              'Could not process request' }
+      end
+
       after { rpc_call.close_channel }
     end
 
