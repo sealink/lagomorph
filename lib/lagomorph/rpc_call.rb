@@ -28,6 +28,7 @@ module Lagomorph
     end
 
     def close_channel
+      return unless @prepared_channel
       @channel.close
       @prepared_channel = false
     end
