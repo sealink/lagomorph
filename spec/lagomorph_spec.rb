@@ -60,6 +60,11 @@ describe 'a Lagomorph RPC process' do
         it { expect(result).to eq 'test' }
       end
 
+      context 'when a worker for an rpc call yields a nil result' do
+        let(:result) { rpc_call.dispatch(queue, 'echo', nil) }
+        it { expect(result).to eq nil }
+      end
+
       context 'when a generate_failure rpc call is made on the ping queue' do
         let(:result) { rpc_call.dispatch(queue, 'generate_failure') }
         it { expect { result }.to raise_error Lagomorph::RpcError,
