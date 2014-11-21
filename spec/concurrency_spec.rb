@@ -1,4 +1,7 @@
 require 'spec_helper'
+
+require 'benchmark'
+
 require 'yaml'
 require 'lagomorph/session'
 require 'lagomorph/supervisor'
@@ -32,28 +35,33 @@ describe 'a Lagomorph RPC process' do
     let(:queue) { 'ping' }
 
     context 'with tasks of varying completion time' do
+      let(:queue)     { 'sleep' }
       let!(:rpc_call) { Lagomorph::RpcCall.new(session) }
-      let!(:results) { [] }
+      let!(:results)  { [] }
+      let(:threads) {
+        2.times.map {
+          Thread.new { results << rpc_call.dispatch(queue, 'nap', 1) }
+        }
+      }
+      let(:execution_time) {
+        Benchmark.realtime { threads.each(&:join) }
+      }
 
       before do
         supervisor.route queue, PongWorker, subscribers: number_subscribers
-        [
-          Thread.new { results << rpc_call.dispatch(queue, 'nap', 2) },
-          Thread.new { results << rpc_call.dispatch(queue, 'nap', 1) }
-        ].each(&:join)
       end
 
       context 'with only one subscriber' do
         let(:number_subscribers) { 1 }
-        it 'will return results in the order dispatched' do
-          expect(results).to eq [2, 1]
+        it 'will return results after the sum of the execution time' do
+          expect(execution_time).to be > 2
         end
       end
 
       context 'with multiple subscribers' do
         let(:number_subscribers) { 2 }
-        it 'will return results from the faster task first' do
-          expect(results).to eq [1, 2]
+        it 'will return results before the sum of the execution time' do
+          expect(execution_time).to be < 2
         end
       end
 
@@ -64,6 +72,10 @@ describe 'a Lagomorph RPC process' do
     end
 
     context 'when using 8 threads, with one instance per thread' do
+      before do
+        supervisor.route queue, PongWorker
+      end
+
       let(:number_of_threads) { 8 }
       let(:total_calls) { 800 }
       let(:calls_per_thread) { (total_calls / number_of_threads).ceil }
