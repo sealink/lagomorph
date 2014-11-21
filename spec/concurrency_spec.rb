@@ -31,6 +31,37 @@ describe 'a Lagomorph RPC process' do
 
     let(:queue) { 'ping' }
 
+    context 'with tasks of varying completion time' do
+      let!(:rpc_call) { Lagomorph::RpcCall.new(session) }
+      let!(:results) { [] }
+
+      before do
+        supervisor.route queue, PongWorker, subscribers: number_subscribers
+        [
+          Thread.new { results << rpc_call.dispatch(queue, 'nap', 2) },
+          Thread.new { results << rpc_call.dispatch(queue, 'nap', 1) }
+        ].each(&:join)
+      end
+
+      context 'with only one subscriber' do
+        let(:number_subscribers) { 1 }
+        it 'will return results in the order dispatched' do
+          expect(results).to eq [2, 1]
+        end
+      end
+
+      context 'with multiple subscribers' do
+        let(:number_subscribers) { 2 }
+        it 'will return results from the faster task first' do
+          expect(results).to eq [1, 2]
+        end
+      end
+
+      after do
+        rpc_call.close_channel
+        session.close_connection
+      end
+    end
 
     context 'when using 8 threads, with one instance per thread' do
       let(:number_of_threads) { 8 }
