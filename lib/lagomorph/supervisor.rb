@@ -13,10 +13,10 @@ module Lagomorph
       durable     = options.fetch :durable,     false
       subscribers = options.fetch :subscribers, 1
 
-      channel = @session.create_channel(prefetch)
-      queue   = QueueBuilder.new(channel).queue(queue_name, durable: durable)
-
       subscribers.times.map do
+        channel = @session.create_channel(prefetch)
+        queue   = QueueBuilder.new(channel).queue(queue_name, durable: durable)
+
         Subscriber.new(worker_class).subscribe(queue, channel)
       end
     end
