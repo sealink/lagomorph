@@ -8,14 +8,17 @@ module Lagomorph
       @session = session
     end
 
-    def route(queue_name, worker_class)
-      prefetch = 10
-      durable  = false
+    def route(queue_name, worker_class, options = {})
+      prefetch    = options.fetch :prefetch,    10
+      durable     = options.fetch :durable,     false
+      subscribers = options.fetch :subscribers, 1
 
-      channel = @session.create_channel(prefetch)
-      queue   = QueueBuilder.new(channel).queue(queue_name, durable: durable)
+      subscribers.times.map do
+        channel = @session.create_channel(prefetch)
+        queue   = QueueBuilder.new(channel).queue(queue_name, durable: durable)
 
-      Subscriber.new(worker_class).subscribe(queue, channel)
+        Subscriber.new(worker_class).subscribe(queue, channel)
+      end
     end
 
   end
