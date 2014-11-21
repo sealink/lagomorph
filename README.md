@@ -1,6 +1,6 @@
 # Lagomorph
 
-[![Gem Version](https://badge.fury.io/rb/geokit.png)](http://badge.fury.io/rb/lagomorph)
+[![Gem Version](https://badge.fury.io/rb/lagomorph.png)](http://badge.fury.io/rb/lagomorph)
 [![Build Status](https://travis-ci.org/sealink/lagomorph.png?branch=master)](https://travis-ci.org/sealink/lagomorph)
 [![Coverage Status](https://coveralls.io/repos/sealink/lagomorph/badge.png)](https://coveralls.io/r/sealink/lagomorph)
 [![Dependency Status](https://gemnasium.com/sealink/lagomorph.png)](https://gemnasium.com/sealink/lagomorph)
