@@ -7,8 +7,11 @@ module Lagomorph
       @worker_class = worker_class
     end
 
-    def subscribe(queue, channel)
-      queue.subscribe(manual_ack: true, block: false) do |metadata, payload|
+    def subscribe(queue, channel, opts={})
+      subscription_opts = opts.merge(durable:    true,
+                                     manual_ack: true,
+                                     block:      false)
+      queue.subscribe(subscription_opts) do |metadata, payload|
         response = process_request(payload)
         channel.ack(metadata.delivery_tag)
         publish_response(channel, metadata, response)
