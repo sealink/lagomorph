@@ -1,6 +1,8 @@
 module Lagomorph
   class Session
 
+    attr_reader :connection
+
     CONNECTION_PARAM_KEYS = [
       :host,
       :heartbeat_interval,
