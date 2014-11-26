@@ -9,7 +9,7 @@ module Lagomorph
     end
 
     def route(queue_name, worker_class, options = {})
-      prefetch    = options.fetch :prefetch,    10
+      prefetch    = options.fetch :prefetch,    1
       durable     = options.fetch :durable,     false
       subscribers = options.fetch :subscribers, 1
 
