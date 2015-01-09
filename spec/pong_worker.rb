@@ -16,4 +16,3 @@ class PongWorker < Lagomorph::Worker
     fail 'Could not process request'
   end
 end
-

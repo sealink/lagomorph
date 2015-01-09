@@ -3,7 +3,7 @@ require 'lagomorph/metadata_adapter'
 
 module Lagomorph
   QueueBuilder = Struct.new(:channel) do
-    def queue(name, opts={})
+    def queue(name, opts = {})
       QueueAdapter.new(channel.queue(name, opts))
     end
 

@@ -4,7 +4,6 @@ require 'securerandom'
 
 module Lagomorph
   class RpcCall
-
     def initialize(session)
       @session = session
       @results = {}
@@ -84,6 +83,5 @@ module Lagomorph
     def parse_response(response)
       JsonParser.new.parse_response(response)
     end
-
   end
 end

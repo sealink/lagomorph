@@ -2,7 +2,6 @@ require 'lagomorph/metadata_adapter'
 
 module Lagomorph
   QueueAdapter = Struct.new(:queue) do
-
     def subscribe(options = {}, &block)
       if Lagomorph.using_bunny?
         queue.subscribe(options) do |delivery_info, properties, payload|
@@ -17,6 +16,5 @@ module Lagomorph
     def name
       queue.name
     end
-
   end
 end

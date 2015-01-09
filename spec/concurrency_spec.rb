@@ -12,10 +12,9 @@ require 'lagomorph/exceptions'
 require 'pong_worker'
 
 describe 'a Lagomorph RPC process' do
-
   let(:rabbitmq_config) {
     YAML.load_file(
-      File.join(File.expand_path(File.dirname(__FILE__)),'rabbitmq.yml')
+      File.join(File.expand_path(File.dirname(__FILE__)), 'rabbitmq.yml')
     )
   }
 
@@ -103,5 +102,4 @@ describe 'a Lagomorph RPC process' do
       session.close_connection
     end
   end
-
 end
