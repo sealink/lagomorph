@@ -6,7 +6,7 @@ module Lagomorph
       request_message = JSON.parse(payload)
       method          = request_message.fetch('method')
       params          = request_message.fetch('params', [])
-      return method, params
+      [method, params]
     end
 
     def parse_response(response)
