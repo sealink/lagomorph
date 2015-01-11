@@ -10,10 +10,9 @@ require 'lagomorph/exceptions'
 require 'pong_worker'
 
 describe 'a Lagomorph RPC process' do
-
   let(:rabbitmq_config) {
     YAML.load_file(
-      File.join(File.expand_path(File.dirname(__FILE__)),'rabbitmq.yml')
+      File.join(File.expand_path(File.dirname(__FILE__)), 'rabbitmq.yml')
     )
   }
 
@@ -55,8 +54,10 @@ describe 'a Lagomorph RPC process' do
 
     context 'when a method which fails is made on the ping queue' do
       let(:result) { rpc_call.dispatch(queue, 'generate_failure') }
-      it { expect { result }.to raise_error Lagomorph::RpcError,
-                                            'Could not process request' }
+      it {
+        expect { result }.to raise_error Lagomorph::RpcError,
+                                         'Could not process request'
+      }
     end
 
     after do
@@ -64,5 +65,4 @@ describe 'a Lagomorph RPC process' do
       session.close_connection
     end
   end
-
 end

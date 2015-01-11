@@ -1,6 +1,5 @@
 module Lagomorph
   class Session
-
     attr_reader :connection
 
     CONNECTION_PARAM_KEYS = [
@@ -12,14 +11,12 @@ module Lagomorph
       :port
     ]
 
-
     def self.connect(connection_params)
       new(connection_params).tap(&:open_connection)
     end
 
-
     def initialize(connection_params)
-      @connection_params = connection_params.select { |key,_|
+      @connection_params = connection_params.select { |key, _|
         CONNECTION_PARAM_KEYS.include?(key)
       }
       @mutex = Monitor.new
@@ -53,6 +50,5 @@ module Lagomorph
         channel
       end
     end
-
   end
 end

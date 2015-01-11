@@ -2,12 +2,11 @@ require 'json'
 
 module Lagomorph
   class JsonParser
-
     def parse_request(payload)
       request_message = JSON.parse(payload)
       method          = request_message.fetch('method')
       params          = request_message.fetch('params', [])
-      return method, params
+      [method, params]
     end
 
     def parse_response(response)
@@ -25,6 +24,5 @@ module Lagomorph
     def build_error(error)
       JSON.generate('error' => error)
     end
-
   end
 end

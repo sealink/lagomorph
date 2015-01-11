@@ -1,6 +1,5 @@
 module Lagomorph
   MetadataAdapter = Struct.new(:delivery_info, :properties) do
-
     def delivery_tag
       delivery_info.delivery_tag
     end
@@ -12,6 +11,5 @@ module Lagomorph
     def correlation_id
       properties.correlation_id
     end
-
   end
 end

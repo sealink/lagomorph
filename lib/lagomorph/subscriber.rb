@@ -2,12 +2,11 @@ require 'lagomorph/json_parser'
 
 module Lagomorph
   class Subscriber
-
     def initialize(worker_class)
       @worker_class = worker_class
     end
 
-    def subscribe(queue, channel, opts={})
+    def subscribe(queue, channel, opts = {})
       subscription_opts = opts.merge(durable:    true,
                                      manual_ack: true,
                                      block:      false)
@@ -17,7 +16,6 @@ module Lagomorph
         publish_response(channel, metadata, response)
       end
     end
-
 
     private
 
@@ -46,6 +44,5 @@ module Lagomorph
     def build_error(error)
       JsonParser.new.build_error(error)
     end
-
   end
 end

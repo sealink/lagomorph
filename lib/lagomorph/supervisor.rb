@@ -3,7 +3,6 @@ require 'lagomorph/json_parser'
 
 module Lagomorph
   class Supervisor
-
     def initialize(session)
       @session = session
     end
@@ -20,6 +19,5 @@ module Lagomorph
         Subscriber.new(worker_class).subscribe(queue, channel)
       end
     end
-
   end
 end

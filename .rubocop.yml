@@ -1,0 +1,11 @@
+Metrics/LineLength:
+  Max: 100
+
+Documentation:
+  Enabled: false
+
+Style/Blocks:
+  Enabled: false
+
+Style/TrivialAccessors:
+  AllowPredicates: true

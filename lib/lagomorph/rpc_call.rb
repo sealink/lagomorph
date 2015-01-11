@@ -4,7 +4,6 @@ require 'securerandom'
 
 module Lagomorph
   class RpcCall
-
     def initialize(session)
       @session = session
       @results = {}
@@ -15,14 +14,10 @@ module Lagomorph
       @queue_name = queue_name
 
       correlation_id = calculate_correlation_id
-      @mutex.synchronize do
-        @results[correlation_id] = ::Queue.new
-      end
+      synchronize(correlation_id)
 
       prepare_channel
-      payload = prepare_payload(method, *params)
-      publish_rpc_call(payload, correlation_id)
-      response = block_till_receive_response(correlation_id)
+      response = publish(correlation_id, method, *params)
 
       if response.key?('result')
         response['result']
@@ -38,6 +33,12 @@ module Lagomorph
     end
 
     private
+
+    def publish(correlation_id, method, *params)
+      payload = prepare_payload(method, *params)
+      publish_rpc_call(payload, correlation_id)
+      block_till_receive_response(correlation_id)
+    end
 
     def prepare_channel
       return if @prepared_channel
@@ -67,6 +68,12 @@ module Lagomorph
       SecureRandom.uuid
     end
 
+    def synchronize(correlation_id)
+      @mutex.synchronize do
+        @results[correlation_id] = ::Queue.new
+      end
+    end
+
     def listen_for_responses
       @reply_queue.subscribe(block: false) do |metadata, payload|
         @results[metadata.correlation_id].push(payload)
@@ -84,6 +91,5 @@ module Lagomorph
     def parse_response(response)
       JsonParser.new.parse_response(response)
     end
-
   end
 end
