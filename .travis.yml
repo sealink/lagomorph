@@ -3,7 +3,7 @@ rvm:
   - 1.9.3
   - 2.1
   - 2.2
-  - jruby-1.7.18
+  - jruby-1.7.19
 script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
 services:
   - rabbitmq
