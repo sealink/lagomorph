@@ -1,10 +1,10 @@
 # Lagomorph
 
-[![Gem Version](https://badge.fury.io/rb/lagomorph.png)](http://badge.fury.io/rb/lagomorph)
-[![Build Status](https://travis-ci.org/sealink/lagomorph.png?branch=master)](https://travis-ci.org/sealink/lagomorph)
-[![Coverage Status](https://coveralls.io/repos/sealink/lagomorph/badge.png)](https://coveralls.io/r/sealink/lagomorph)
-[![Dependency Status](https://gemnasium.com/sealink/lagomorph.png)](https://gemnasium.com/sealink/lagomorph)
-[![Code Climate](https://codeclimate.com/github/sealink/lagomorph.png)](https://codeclimate.com/github/sealink/lagomorph)
+[![Gem Version](https://badge.fury.io/rb/lagomorph.svg)](http://badge.fury.io/rb/lagomorph)
+[![Build Status](https://travis-ci.org/sealink/lagomorph.svg?branch=master)](https://travis-ci.org/sealink/lagomorph)
+[![Coverage Status](https://coveralls.io/repos/sealink/lagomorph/badge.svg)](https://coveralls.io/r/sealink/lagomorph)
+[![Dependency Status](https://gemnasium.com/sealink/lagomorph.svg)](https://gemnasium.com/sealink/lagomorph)
+[![Code Climate](https://codeclimate.com/github/sealink/lagomorph/badges/gpa.svg)](https://codeclimate.com/github/sealink/lagomorph)
 
 RPC Messaging pattern using RabbitMQ
 
