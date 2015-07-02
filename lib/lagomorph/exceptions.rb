@@ -1,4 +1,4 @@
 module Lagomorph
-  class Exception < ::Exception; end
-  class RpcError  <   Exception; end
+  Error    = Class.new(RuntimeError)
+  RpcError = Class.new(Error)
 end
