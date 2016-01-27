@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 1.9
+  - 2.0
   - 2.1
   - 2.2
   - 2.3.0 # The version of RVM installed on Travis doesn't yet recognise 2.3 as an alias of 2.3.0
