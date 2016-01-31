@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   #  end
   spec.add_dependency 'json'
 
-  spec.add_development_dependency 'bundler', '~> 1.11'
+  spec.add_development_dependency 'bundler', '~> 1.8'
 
   # Switch your platform when spec'ing...
   if RUBY_PLATFORM == 'java' # jruby
