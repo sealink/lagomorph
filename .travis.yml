@@ -1,27 +1,32 @@
 language: ruby
-before_install: gem install bundler -v 1.11.2
 matrix:
   include:
     - rvm: 2.0
       before_install:
+        - gem install bundler -v 1.11.2
         - gem update --system 2.4.3
         - gem --version
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
     - rvm: 2.1
       before_install:
+        - gem install bundler -v 1.11.2
         - gem update --system 2.4.3
         - gem --version
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
     - rvm: 2.2
       before_install:
+        - gem install bundler -v 1.11.2
         - gem update --system 2.4.3
         - gem --version
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
     - rvm: 2.3.0 # The version of RVM installed on Travis doesn't yet recognise 2.3 as an alias of 2.3.0
+      before_install: gem install bundler -v 1.11.2
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
     - rvm: jruby-1.7
+      before_install: gem install bundler -v 1.11.2
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
     - rvm: jruby-9000
+      before_install: gem install bundler -v 1.11.2
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec spec"
 #script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
 services:
