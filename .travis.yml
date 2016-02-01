@@ -27,7 +27,7 @@ matrix:
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
     - rvm: jruby-9000
       before_install: gem install bundler -v 1.11.2
-      script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec spec"
+      script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake spec"
 #script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
 services:
   - rabbitmq
