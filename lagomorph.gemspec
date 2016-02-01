@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   #  end
   spec.add_dependency 'json'
 
-  spec.add_development_dependency 'bundler', '~> 1.7'
+  spec.add_development_dependency 'bundler', '~> 1.11'
 
   # Switch your platform when spec'ing...
   if RUBY_PLATFORM == 'java' # jruby
@@ -47,4 +47,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov-rcov'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'travis'
 end
