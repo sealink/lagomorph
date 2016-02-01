@@ -25,7 +25,7 @@ matrix:
     - rvm: jruby-1.7
       before_install: gem install bundler -v 1.11.2
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
-    - rvm: jruby-9000
+    - rvm: jruby-9.0.5.0
       before_install: gem install bundler -v 1.11.2
       script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake spec"
 #script: "cp spec/rabbitmq.yml.example spec/rabbitmq.yml && bundle exec rake coverage"
